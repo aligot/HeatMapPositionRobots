@@ -128,7 +128,7 @@ refineData <- function(data) {
 
 
 plotData <- function(points, outputname) {
-  colnames(points) <- c('X','Y')
+  colnames(points) <- c('v', 'X','Y')
   ggplot(points, aes(x=X, y=Y)) +
     geom_bin2d(bins=1200) +
     xlim(0,1200) +
@@ -150,7 +150,7 @@ plotData <- function(points, outputname) {
       plot.margin= grid::unit(c(0, 0, 0, 0), "in"),
       legend.position="none"
     )
-  ggsave(paste("Plots/", outputname, ".pdf", sep=''), plot=last_plot(), device = NULL, width = 45, height = 44, units = "cm", dpi = 200)
+  ggsave(paste("Plots/", outputname, ".png", sep=''), plot=last_plot(), device = NULL, width = 45, height = 44, units = "cm", dpi = 200)
 }
 
 
@@ -162,7 +162,7 @@ files <- list.files("Positions/", pattern ="\\.txt$")
 ########
 # Main #
 ########
-for (f in files) {
+for (f in files[39:length(files)]) {
   data <- read.csv(paste("Positions/", f, sep=''), header = FALSE)
   
   colnames(data) <- c('Frame', 'X', 'Y', 'Radius')
@@ -176,8 +176,5 @@ for (f in files) {
   
   points <- fromCentersToDisks(refinedData, outputname)
   
-  plotData(points, outputname)
+  #plotData(points, outputname)
 }
-
-      
-      
